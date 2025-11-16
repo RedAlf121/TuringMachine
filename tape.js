@@ -3,8 +3,8 @@ export default class Tape{
     _pointer = null
 
     constructor(){
-        this._list = new Array(1e6+5)
-        this._pointer = Math.floor(this._list.length/2)
+        this._list = new Array(1e2+5).fill(0)
+        this._pointer = 0
     }
 
     list(){return this._list}

@@ -1,22 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Turing Machine Simulation</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <script type="module" src="main.js" defer></script>
-    <script type="module" src="compile.js" defer></script>
-</head>
-<body>
-    <div class="tape">
-
-    </div>
+  </head>
+  <body>
+    <div class="tape"></div>
     <div class="ide">
-        <form class="ide__form">
-            <textarea class="ide__form-editor" name="editor" id="editor"></textarea>
-            <input class="ide__form-compile-button" type="submit" value="Compile">
-        </form>
+      <textarea class="ide__editor" name="editor" id="editor"></textarea>
+      <button class="ide__compile-button" type="submit">Compile</button>
     </div>
-</body>
+  </body>
 </html>
