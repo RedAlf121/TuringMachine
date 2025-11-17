@@ -2,10 +2,11 @@ export default class TapeView {
   _tape = null;
   constructor(tape) {
     this._tape = tape;
+    this._tape.onChange(()=>this.render())
   }
 
-  render(path) {
-    const parent = document.querySelector(path);
+  render() {
+    const parent = document.querySelector(".tape");
     parent.innerHTML = this._definition();
   }
 
@@ -22,11 +23,6 @@ export default class TapeView {
   }
 
   _pointer() {
-    /*
-        remember 
-        left(0) = 25
-        left(x) = 25+60x
-    */
     return `
         <div class="pointer" style="left:${this._left(this._tape._pointer)}px">
 
@@ -43,6 +39,6 @@ export default class TapeView {
   }
 
   _left(index) {
-    return 25 + index * 60;
+    return 40 + index * 90;
   }
 }
