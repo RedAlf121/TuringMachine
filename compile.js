@@ -1,5 +1,5 @@
 export default async function compile(tape) {
-  clear(tape)
+  clear(tape);
   const operations = {
     "+": () => {
       tape.editList((tape.current() + 1) % 256);
@@ -39,7 +39,7 @@ export default async function compile(tape) {
         stack.pop();
       }
     } else {
-      //await sleep(1000);
+      await sleep(1000);
       operations[code.charAt(i)]();
     }
   }
@@ -70,14 +70,15 @@ function evaluate(code) {
 
 function printValue(value) {
   const result = document.querySelector(".result");
-  const printedValue = document.createElement("span")
-  printedValue.textContent = String.fromCharCode(value)
-  result.appendChild(printedValue) 
+  const printedValue = document.createElement("span");
+  printedValue.textContent = String.fromCharCode(value);
+  result.appendChild(printedValue);
 }
 
-
-function clear(tape){
-    tape.clear();
-    //const result = document.querySelector('.result')
-    //result.child
+function clear(tape) {
+  tape.clear();
+  const result = document.querySelector(".result");
+  while (result.children.length > 1) {
+    result.removeChild(result.lastChild);
+  }
 }
