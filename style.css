@@ -1,63 +1,96 @@
-.ide__editor {
-    margin-top: 20px;
-    resize: none;
-    height: 80vh;
-    font-size: 28px;
-    font-family: monospace;
-    padding: 16px;
-    line-height: 1.6;
+:root{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.ide {
+  display: flex;
+  flex-direction: row;
+  gap: 10vw;
 }
 
-.ide__compile-button {
-    font-size: 24px;
-    padding: 14px 28px;
-    cursor: pointer;
+.ide__components {
+  width: 60%;
+  margin-top: 20px;
+}
+
+.ide__components-editor-label {
+  font-size: 28px;
+  font-family: monospace;
+}
+
+.ide__components-editor {
+  resize: none;
+  height: 60vh;
+  width: 100%;
+  font-size: 28px;
+  font-family: monospace;
+  padding: 16px;
+  line-height: 1.6;
+}
+
+.ide__components-compile-button {
+  font-size: 24px;
+  padding: 14px 28px;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-left: 80%;
 }
 
 .tape {
-    position: relative;
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 4px;
-    overflow-x: auto;
-    white-space: nowrap;
-    width: 100%;
-    padding: 12px;
-    box-sizing: border-box;
-    scrollbar-width: thin;
-    font-size: 28px;
-    background-color: #222;
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+  overflow-x: auto;
+  white-space: nowrap;
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  font-size: 28px;
+  background-color: #222;
 }
 
 .square {
-    width: 80px;
-    height: 50px;
-    flex: 0 0 auto;
-    background-color: blue;
-    color: white;
-    font-size: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 6px 3px;
-    box-sizing: border-box;
-    font-family: monospace;
-    border-radius: 6px;
+  width: 80px;
+  height: 50px;
+  flex: 0 0 auto;
+  background-color: blue;
+  color: white;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 6px 3px;
+  box-sizing: border-box;
+  font-family: monospace;
+  border-radius: 6px;
 }
-
 
 .pointer {
-    position: absolute;
-    bottom: 5px;
-    left: 25px;
-    width: 0;
-    height: 0;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-bottom: 20px solid white;
-    z-index: 10;
+  position: absolute;
+  bottom: 5px;
+  left: 25px;
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 20px solid white;
+  z-index: 10;
 }
 
-.hidden{
-    display: none;
+.hidden {
+  display: none;
+}
+
+.result {
+  margin-top: 20px;
+  height: 10vh;
+  width: 100%;
+  font-size: 28px;
+  font-family: monospace;
+  padding: 16px;
+  line-height: 1.6;
+  background-color: gainsboro;
 }

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <title>Turing Machine Simulation</title>
     <link rel="stylesheet" href="style.css" />
     <script type="module" src="main.js" defer></script>
@@ -11,8 +11,14 @@
   <body>
     <div class="tape"></div>
     <div class="ide">
-      <textarea class="ide__editor" name="editor" id="editor"></textarea>
-      <button class="ide__compile-button" type="submit">Compile</button>
+      <div class="ide__components">
+        <label class="ide__components-editor-label" for="editor">Write your brainf*ck code</label>
+        <textarea id="text-editor" class="ide__components-editor" name="editor" id="editor"></textarea>
+        <button id="compiler-button" class="ide__components-compile-button" type="submit">Compile</button>
+      </div>
+      <div class="result">
+        <span>Result:</span>
+      </div>
     </div>
   </body>
 </html>

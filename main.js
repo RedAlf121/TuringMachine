@@ -4,4 +4,4 @@ import compile from './compile.js'
 const tape = new Tape()
 const view = new TapeView(tape)
 view.render()
-document.querySelector('button.ide__compile-button').addEventListener("click",()=>compile(tape))
+document.querySelector('button#compiler-button').addEventListener("click",()=>compile(tape))

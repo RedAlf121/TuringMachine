@@ -1,5 +1,5 @@
 export default async function compile(tape) {
-  tape.clear();
+  clear(tape)
   const operations = {
     "+": () => {
       tape.editList((tape.current() + 1) % 256);
@@ -21,14 +21,13 @@ export default async function compile(tape) {
       printValue(tape.current());
     },
     ",": () => {
-      tape.editList(prompt("inserte un valor") % 256);
+      tape.editList(Math.abs(prompt("inserte un valor")) % 256);
     },
   };
   const code = getCode();
   const stack = [];
   if (!evaluate(code)) return;
   for (let i = 0; i < code.length; i++) {
-    console.log(stack);
     if (code.charAt(i) === "[") {
       if (tape.current() === 0) {
         stack.pop();
@@ -40,7 +39,7 @@ export default async function compile(tape) {
         stack.pop();
       }
     } else {
-      await sleep(1000);
+      //await sleep(1000);
       operations[code.charAt(i)]();
     }
   }
@@ -51,7 +50,7 @@ function sleep(ms) {
 }
 
 function getCode() {
-  return document.querySelector("textarea.ide__editor").value;
+  return document.querySelector("textarea#text-editor").value;
 }
 
 function validate(char) {
@@ -70,5 +69,15 @@ function evaluate(code) {
 }
 
 function printValue(value) {
-  console.log(value);
+  const result = document.querySelector(".result");
+  const printedValue = document.createElement("span")
+  printedValue.textContent = String.fromCharCode(value)
+  result.appendChild(printedValue) 
+}
+
+
+function clear(tape){
+    tape.clear();
+    //const result = document.querySelector('.result')
+    //result.child
 }
