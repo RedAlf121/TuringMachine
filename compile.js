@@ -54,18 +54,37 @@ function getCode() {
 }
 
 function validate(char) {
-  let valid = true;
-  //todo
-  return valid;
+  return /^[+\-<>.,\[\]]$/.test(char);
 }
 function evaluate(code) {
+  const brackets = [];
   for (let i = 0; i < code.length; i++) {
     if (!validate(code.charAt(i))) {
-      alert("Compilation error");
+      showError(`Carácter no válido: "${code.charAt(i)}".`);
+      return false;
+    }
+
+    if (code.charAt(i) === "[") {
+      brackets.push(i);
+    } else if (code.charAt(i) === "]" && brackets.pop() === undefined) {
+      showError("Programa inválido: hay un ] sin su [ correspondiente.");
       return false;
     }
   }
+
+  if (brackets.length > 0) {
+    showError("Programa inválido: falta un ] para cerrar un bucle.");
+    return false;
+  }
   return true;
+}
+
+function showError(message) {
+  const result = document.querySelector(".result");
+  const error = document.createElement("span");
+  error.className = "result-error";
+  error.textContent = message;
+  result.appendChild(error);
 }
 
 function printValue(value) {
@@ -75,7 +94,7 @@ function printValue(value) {
   result.appendChild(printedValue);
 }
 
-function clear(tape) {
+export function clear(tape) {
   tape.clear();
   const result = document.querySelector(".result");
   while (result.children.length > 1) {

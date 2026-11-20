@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="favicon.ico"/>
-    <title>Brainf*ck compiler</title>
+    <title>Simulador Brainfuck</title>
     <link rel="stylesheet" href="style.css" />
     <script type="module" src="main.js" defer></script>
   </head>
@@ -12,13 +12,38 @@
     <div class="tape"></div>
     <div class="ide">
       <div class="ide__components">
-        <label class="ide__components-editor-label" for="editor">Write your brainf*ck code</label>
-        <textarea id="text-editor" class="ide__components-editor" name="editor" id="editor"></textarea>
-        <button id="compiler-button" class="ide__components-compile-button" type="submit">Compile</button>
+        <label class="ide__components-editor-label" for="text-editor">Escribe tu código Brainfuck</label>
+        <textarea id="text-editor" class="ide__components-editor" name="editor" spellcheck="false"></textarea>
+        <div class="ide__components-actions">
+          <button id="clear-button" class="ide__components-clear-button" type="button">Limpiar</button>
+          <button id="compiler-button" class="ide__components-compile-button" type="button">Compile</button>
+        </div>
       </div>
-      <div class="result">
-        <span>Result:</span>
-      </div>
+      <div class="result"> <span>Result:</span></div>
     </div>
+    <details class="help">
+      <summary id="help-title">Guía de Brainfuck</summary>
+      <p>El programa opera sobre una cinta de celdas con valores de 0 a 255 y un puntero que se mueve entre ellas. Cada instrucción modifica la celda actual, mueve el puntero o controla la repetición.</p>
+      <h3>Instrucciones</h3>
+      <table>
+        <thead>
+          <tr><th>Carácter</th><th>Acción</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>+</code></td><td>Suma 1 a la celda actual.</td></tr>
+          <tr><td><code>-</code></td><td>Resta 1 a la celda actual.</td></tr>
+          <tr><td><code>&gt;</code></td><td>Mueve el puntero a la derecha.</td></tr>
+          <tr><td><code>&lt;</code></td><td>Mueve el puntero a la izquierda.</td></tr>
+          <tr><td><code>.</code></td><td>Imprime la celda actual como carácter.</td></tr>
+          <tr><td><code>,</code></td><td>Pide un valor y lo guarda en la celda.</td></tr>
+          <tr><td><code>[</code></td><td>Salta al <code>]</code> correspondiente si la celda vale 0.</td></tr>
+          <tr><td><code>]</code></td><td>Vuelve al <code>[</code> correspondiente si la celda no vale 0.</td></tr>
+        </tbody>
+      </table>
+      <h3>Ejemplo</h3>
+      <p>Multiplica 8 por 8 e imprime <code>@</code>:</p>
+      <pre><code>++++++++[&gt;++++++++&lt;-]&gt;.</code></pre>
+      <p><a href="https://es.wikipedia.org/wiki/Brainfuck" target="_blank" rel="noopener noreferrer">Más información sobre Brainfuck en Wikipedia</a></p>
+    </details>
   </body>
 </html>

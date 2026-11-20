@@ -1,25 +1,45 @@
-:root{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+:root {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  --bg: #0f1117;
+  --surface: #181b24;
+  --surface-alt: #1f2330;
+  --border: #2a2f3d;
+  --text: #e6e8ef;
+  --text-muted: #8b91a3;
+  --accent: #6c8cff;
+  --accent-hover: #8aa3ff;
+  --cell: #232a45;
+  --cell-active: #3b4fa8;
+  --pointer: #ffd166;
 }
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+  margin: 0;
+}
+
 .ide {
   display: flex;
   flex-direction: row;
-  gap: 10vw;
-}
-
-.ide__components {
-  width: 60%;
-  margin-top: 20px;
-}
-
-.ide__components-editor-label {
-  font-size: 28px;
-  font-family: monospace;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 1.5rem;
 }
 
 .ide__components-editor {
+  background-color: #0d0f14;
+  color: #d4d8e4;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  caret-color: var(--pointer);
+  outline: none;
+  tab-size: 2;
+  box-sizing: border-box;
   resize: none;
   height: 60vh;
   width: 100%;
@@ -29,12 +49,55 @@
   line-height: 1.6;
 }
 
+.ide__components-editor:focus {
+  border-color: var(--accent);
+}
+
+.ide__components-editor-label {
+  color: var(--text-muted);
+  font-size: 28px;
+  font-family: monospace;
+}
+
+.ide__components {
+  flex: 1;
+  min-width: 0;
+}
+
+.ide__components-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 15px;
+}
+
 .ide__components-compile-button {
+  background-color: var(--accent);
+  color: #0f1117;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
   font-size: 24px;
   padding: 14px 28px;
   cursor: pointer;
-  margin-top: 15px;
-  margin-left: 80%;
+}
+
+.ide__components-compile-button:hover {
+  background-color: var(--accent-hover);
+}
+
+.ide__components-clear-button {
+  background-color: var(--surface-alt);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 24px;
+  padding: 14px 28px;
+  cursor: pointer;
+}
+
+.ide__components-clear-button:hover {
+  background-color: var(--surface);
 }
 
 .tape {
@@ -49,14 +112,14 @@
   box-sizing: border-box;
   scrollbar-width: thin;
   font-size: 28px;
-  background-color: #222;
+  background-color: var(--surface);
 }
 
 .square {
   width: 80px;
   height: 50px;
   flex: 0 0 auto;
-  background-color: blue;
+  background-color: var(--cell);
   color: white;
   font-size: 32px;
   display: flex;
@@ -76,7 +139,7 @@
   height: 0;
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
-  border-bottom: 20px solid white;
+  border-bottom: 20px solid var(--pointer);
   z-index: 10;
 }
 
@@ -85,12 +148,113 @@
 }
 
 .result {
-  margin-top: 20px;
-  height: 10vh;
-  width: 100%;
+  flex: 1;
+  min-width: 0;
+  background-color: #05070a;
+  color: #4ade80;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+  overflow-y: auto;
+  min-height: 4.5rem;
   font-size: 28px;
+  padding: 12px;
   font-family: monospace;
-  padding: 16px;
   line-height: 1.6;
-  background-color: gainsboro;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  box-sizing: border-box;
+}
+
+.result-error {
+  display: block;
+  color: #f87171;
+}
+
+.result > span:first-child {
+  color: var(--text-muted);
+}
+
+.result > span:first-child::before {
+  content: "$ ";
+  color: var(--accent);
+}
+
+.help {
+  margin: 0 1.5rem 2rem;
+  padding: 1.5rem;  
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+}
+
+.help h3 {
+  margin-top: 0;
+}
+
+.help > summary {
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.help > summary::marker {
+  color: var(--accent);
+}
+
+.help p,
+.help li {
+  line-height: 1.6;
+}
+
+.help table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.help th,
+.help td {
+  padding: 0.6rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.help th {
+  color: var(--text-muted);
+}
+
+.help code {
+  color: var(--pointer);
+}
+
+.help a {
+  color: var(--accent-hover);
+}
+
+@media (max-width: 760px) {
+  .ide {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .ide__components,
+  .result {
+    width: 100%;
+  }
+
+  .ide__components-actions button {
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .ide__components-editor {
+    height: 40vh;
+  }
+
+  .help {
+    margin-inline: 1rem;
+    overflow-x: auto;
+  }
 }
