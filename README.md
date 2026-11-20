@@ -2,16 +2,6 @@
 
 A dependency-free browser simulator for a tape-based programming language. It visualizes cell values and the pointer while a program runs, and includes controls for speed, pause/resume, stepping, and moving backward through execution.
 
-## Run locally
-
-Serve the repository root over HTTP so the browser can load the ES modules:
-
-```sh
-python3 -m http.server 8000
-```
-
-Then open <http://localhost:8000>. No build step or package installation is required.
-
 ## Project structure
 
 - `index.html` defines the editor, tape, output, execution controls, and language guide.
