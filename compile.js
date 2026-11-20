@@ -15,7 +15,7 @@ const operations = {
   },
   ".": (tape) => printValue(tape.current()),
   ",": (tape) => {
-    tape.editList(Math.abs(prompt("inserte un valor")) % 256);
+    tape.editList(Math.abs(prompt("Enter a value")) % 256);
   },
 };
 
@@ -231,7 +231,7 @@ function evaluate(code) {
   for (let i = 0; i < code.length; i++) {
     const instruction = code.charAt(i);
     if (!validate(instruction)) {
-      showError(`Carácter no válido: "${instruction}".`);
+      showError(`Invalid character: "${instruction}".`);
       return null;
     }
 
@@ -240,7 +240,7 @@ function evaluate(code) {
     } else if (instruction === "]") {
       const opening = openBrackets.pop();
       if (opening === undefined) {
-        showError("Programa inválido: hay un ] sin su [ correspondiente.");
+        showError("Invalid program: unmatched closing bracket ']' (missing '[').");
         return null;
       }
       bracketPairs.set(opening, i);
@@ -249,7 +249,7 @@ function evaluate(code) {
   }
 
   if (openBrackets.length > 0) {
-    showError("Programa inválido: falta un ] para cerrar un bucle.");
+    showError("Invalid program: missing closing ']' for a loop.");
     return null;
   }
 

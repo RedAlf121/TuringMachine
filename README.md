@@ -1,29 +1,48 @@
-# Simulador de cinta / Brainfuck
+# BrainF Simulator
 
-Simulador web en JavaScript de una cinta de celdas y un puntero, inspirado en Brainfuck y en una máquina de Turing. Incluye una representación de cinta (tape.js), una vista (tapeview.js) y un compilador/ejecutor (compile.js).
+A dependency-free browser simulator for a tape-based programming language. It visualizes cell values and the pointer while a program runs, and includes controls for speed, pause/resume, stepping, and moving backward through execution.
 
-## Objetivo de portafolio
-Explicar visualmente cómo se ejecuta un programa de bajo nivel: estado de la cinta, posición del puntero e instrucciones paso a paso.
+## Run locally
 
-## Alcance acordado
-- Unificar la interfaz con el tema oscuro del Playground.
-- Permitir pegar/escribir un programa y ejecutarlo.
-- Animar la cinta y el puntero paso a paso.
-- Añadir controles de ejecución: iniciar, pausar, reiniciar, paso individual y velocidad ajustable.
-- Mantener el comportamiento actual y validar entradas/programas inválidos.
-- La máquina de Turing clásica con tabla de estados es opcional y solo se aborda después del alcance principal.
+Serve the repository root over HTTP so the browser can load the ES modules:
 
-## Criterios de aceptación
-Un visitante puede cargar un programa corto, controlar su ejecución y entender el cambio de cada celda y del puntero. La interfaz debe explicar el estado actual sin requerir conocer el código fuente.
+```sh
+python3 -m http.server 8000
+```
 
-## Desarrollo pendiente — eliminar esta sección al finalizar
-- [ ] Ejecutar y documentar el comportamiento actual.
-- [ ] Revisar el compilador y definir la semántica admitida.
-- [ ] Implementar el diseño visual compartido.
-- [ ] Añadir editor de programa, controles y velocidad.
-- [ ] Animar y hacer accesible la visualización de la cinta y el puntero.
-- [ ] Probar programas válidos, vacíos e inválidos, además de reinicio y pausa.
-- [ ] Añadir capturas/GIF, instrucciones de uso y una explicación breve del modelo.
+Then open <http://localhost:8000>. No build step or package installation is required.
 
-## Nota para agentes
-Hay cambios locales sin confirmar en este repositorio. Inspecciónalos antes de editar; no los sobrescribas ni uses comandos destructivos. Al completar el proyecto, elimina únicamente la sección temporal **Desarrollo pendiente**.
+## Project structure
+
+- `index.html` defines the editor, tape, output, execution controls, and language guide.
+- `main.js` connects the interface, validates editor input, and manages the tape and execution controls.
+- `compile.js` validates programs, pairs loop brackets, executes instructions, and stores up to 1,000 history states for backward navigation.
+- `tape.js` stores cell values and the current pointer.
+- `tapeview.js` renders the tape and pointer in the DOM.
+- `style.css` contains the dark theme and responsive layout.
+
+## Execution controls
+
+- **Run** validates the editor contents, resets the tape and output, then starts execution.
+- **Pause / Resume** stops or continues the current run.
+- **Step** executes one non-bracket instruction. Loop brackets are resolved internally.
+- **Back** pauses execution and restores the previous instruction's tape, pointer, output, and program position.
+- **Clear** empties the editor, resets the tape and output, and stops the current run.
+
+The speed slider displays a percentage. Higher values reduce the delay between instructions; the resulting delay ranges from 1 ms at 100% to 1,000 ms at 0%. The history retains up to 1,000 states; older states are discarded when the limit is reached.
+
+## Supported instructions
+
+| Instruction | Behavior |
+| --- | --- |
+| `+` / `-` | Increment or decrement the current cell, wrapping between 0 and 255. |
+| `>` / `<` | Move the pointer right or left. |
+| `.` | Append the current cell as a character to the output. |
+| `,` | Request a value and store it in the current cell. |
+| `[` / `]` | Loop while the current cell is nonzero. Brackets must be balanced. |
+
+The editor accepts only these eight instruction characters. Programs with invalid characters or unbalanced brackets are rejected before execution.
+
+## Manual checks
+
+There is no automated test runner configured. When changing the executor or interface, verify valid and invalid programs, nested loops, pause/resume, step and back behavior, the history limit, and clearing during execution.

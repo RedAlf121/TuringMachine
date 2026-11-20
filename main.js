@@ -28,20 +28,20 @@ function updateSpeedLabel() {
 function updateExecutionControls(state, statusOverride) {
   const isRunning = state?.status === 'running'
   const isStepping = state?.isStepping ?? false
-  pauseButton.textContent = isRunning || isStepping ? 'Pausar' : 'Continuar'
+  pauseButton.textContent = isRunning || isStepping ? 'Pause' : 'Resume'
   pauseButton.disabled = !isRunning && !isStepping && state?.status !== 'paused'
   stepButton.disabled = !state?.canStep
   backButton.disabled = !state?.canGoBack
 
   const statusLabels = {
-    ready: 'Listo',
-    running: 'Ejecutando',
-    paused: 'Pausado',
-    completed: 'Completado',
-    stopped: 'Detenido',
+    ready: 'Ready',
+    running: 'Running',
+    paused: 'Paused',
+    completed: 'Completed',
+    stopped: 'Stopped',
   }
   executionStatus.textContent =
-    statusOverride || (isStepping ? 'Avanzando un paso…' : statusLabels[state?.status] || 'Listo')
+    statusOverride || (isStepping ? 'Stepping…' : statusLabels[state?.status] || 'Ready')
 }
 
 document.querySelector('#compiler-button').addEventListener('click', () => {
@@ -52,7 +52,7 @@ document.querySelector('#compiler-button').addEventListener('click', () => {
   })
 
   if (!execution) {
-    updateExecutionControls(null, 'Revisa el programa')
+    updateExecutionControls(null, 'Check your program')
     return
   }
   execution.start()
