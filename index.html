@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="favicon.ico"/>
-    <title>Simulador Brainfuck</title>
+    <title>BrainF Simulator</title>
     <link rel="stylesheet" href="style.css" />
     <script type="module" src="main.js" defer></script>
   </head>
@@ -16,13 +16,27 @@
         <textarea id="text-editor" class="ide__components-editor" name="editor" spellcheck="false"></textarea>
         <div class="ide__components-actions">
           <button id="clear-button" class="ide__components-clear-button" type="button">Limpiar</button>
-          <button id="compiler-button" class="ide__components-compile-button" type="button">Compile</button>
         </div>
       </div>
-      <div class="result"> <span>Result:</span></div>
+      <div class="ide__output">
+        <div class="result"><span>Result:</span></div>
+        <section class="execution-controls" aria-label="Controles de ejecución">
+          <label class="execution-controls__speed" for="execution-speed">
+            <span>Velocidad <output id="speed-value" for="execution-speed">75%</output></span>
+            <input id="execution-speed" type="range" min="1" max="1000" step="1" value="751" />
+          </label>
+          <div class="execution-controls__actions">
+            <button id="compiler-button" class="execution-controls__button execution-controls__run" type="button">Ejecutar</button>
+            <button id="pause-button" class="execution-controls__button" type="button" disabled>Pausar</button>
+            <button id="step-button" class="execution-controls__button" type="button" disabled>Paso</button>
+            <button id="back-button" class="execution-controls__button" type="button" disabled>Atrás</button>
+          </div>
+          <p id="execution-status" class="execution-controls__status" role="status" aria-live="polite">Listo</p>
+        </section>
+      </div>
     </div>
     <details class="help">
-      <summary id="help-title">Guía de Brainfuck</summary>
+      <summary id="help-title">New in BrainF Simulator?</summary>
       <p>El programa opera sobre una cinta de celdas con valores de 0 a 255 y un puntero que se mueve entre ellas. Cada instrucción modifica la celda actual, mueve el puntero o controla la repetición.</p>
       <h3>Instrucciones</h3>
       <table>

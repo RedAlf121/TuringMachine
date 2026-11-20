@@ -7,11 +7,81 @@ view.render()
 const editor = document.querySelector('#text-editor')
 const allowedCharacters = /^[+\-<>.,\[\]]*$/
 const invalidCharacters = /[^+\-<>.,\[\]]/g
+const speedControl = document.querySelector('#execution-speed')
+const speedValue = document.querySelector('#speed-value')
+const pauseButton = document.querySelector('#pause-button')
+const stepButton = document.querySelector('#step-button')
+const backButton = document.querySelector('#back-button')
+const executionStatus = document.querySelector('#execution-status')
+const MAX_SPEED = 1000
+let execution = null
 
-document.querySelector('#compiler-button').addEventListener('click', () => compile(tape))
+function getExecutionDelay() {
+  return MAX_SPEED - Number(speedControl.value) + 1
+}
+
+function updateSpeedLabel() {
+  const speed = Number(speedControl.value)
+  speedValue.value = `${Math.round((speed / MAX_SPEED) * 100)}%`
+}
+
+function updateExecutionControls(state, statusOverride) {
+  const isRunning = state?.status === 'running'
+  const isStepping = state?.isStepping ?? false
+  pauseButton.textContent = isRunning || isStepping ? 'Pausar' : 'Continuar'
+  pauseButton.disabled = !isRunning && !isStepping && state?.status !== 'paused'
+  stepButton.disabled = !state?.canStep
+  backButton.disabled = !state?.canGoBack
+
+  const statusLabels = {
+    ready: 'Listo',
+    running: 'Ejecutando',
+    paused: 'Pausado',
+    completed: 'Completado',
+    stopped: 'Detenido',
+  }
+  executionStatus.textContent =
+    statusOverride || (isStepping ? 'Avanzando un paso…' : statusLabels[state?.status] || 'Listo')
+}
+
+document.querySelector('#compiler-button').addEventListener('click', () => {
+  execution?.stop()
+  execution = compile(tape, {
+    delayMs: getExecutionDelay(),
+    onStateChange: updateExecutionControls,
+  })
+
+  if (!execution) {
+    updateExecutionControls(null, 'Revisa el programa')
+    return
+  }
+  execution.start()
+})
+
+pauseButton.addEventListener('click', () => {
+  if (!execution) return
+  const state = execution.getState()
+  if (state.status === 'running' || state.isStepping) {
+    execution.pause()
+  } else {
+    execution.resume()
+  }
+})
+
+stepButton.addEventListener('click', () => execution?.step())
+backButton.addEventListener('click', () => execution?.back())
+
+speedControl.addEventListener('input', () => {
+  updateSpeedLabel()
+  if (execution) execution.setDelay(getExecutionDelay())
+})
+
 document.querySelector('#clear-button').addEventListener('click', () => {
+  execution?.stop()
+  execution = null
   editor.value = ''
   clear(tape)
+  updateExecutionControls(null)
 })
 
 editor.addEventListener('beforeinput', (event) => {

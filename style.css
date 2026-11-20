@@ -64,26 +64,19 @@ body {
   min-width: 0;
 }
 
+.ide__output {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
 .ide__components-actions {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
   margin-top: 15px;
-}
-
-.ide__components-compile-button {
-  background-color: var(--accent);
-  color: #0f1117;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 24px;
-  padding: 14px 28px;
-  cursor: pointer;
-}
-
-.ide__components-compile-button:hover {
-  background-color: var(--accent-hover);
 }
 
 .ide__components-clear-button {
@@ -148,8 +141,8 @@ body {
 }
 
 .result {
-  flex: 1;
   min-width: 0;
+  width: 100%;
   background-color: #05070a;
   color: #4ade80;
   border: 1px solid var(--border);
@@ -164,6 +157,73 @@ body {
   overflow-wrap: anywhere;
   white-space: pre-wrap;
   box-sizing: border-box;
+}
+
+.execution-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.execution-controls__speed {
+  display: grid;
+  gap: 0.5rem;
+  color: var(--text-muted);
+}
+
+.execution-controls__speed output {
+  color: var(--text);
+}
+
+.execution-controls__speed input {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.execution-controls__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.execution-controls__button {
+  padding: 0.6rem 0.85rem;
+  background-color: var(--surface-alt);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.execution-controls__button:hover:not(:disabled) {
+  background-color: var(--border);
+}
+
+.execution-controls__button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.execution-controls__run {
+  background-color: var(--accent);
+  color: #0f1117;
+  border-color: transparent;
+  font-weight: 600;
+}
+
+.execution-controls__run:hover:not(:disabled) {
+  background-color: var(--accent-hover);
+}
+
+.execution-controls__status {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--text-muted);
 }
 
 .result-error {
@@ -240,7 +300,7 @@ body {
   }
 
   .ide__components,
-  .result {
+  .ide__output {
     width: 100%;
   }
 
@@ -251,6 +311,14 @@ body {
 
   .ide__components-editor {
     height: 40vh;
+  }
+
+  .execution-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .execution-controls__status {
+    grid-column: auto;
   }
 
   .help {
